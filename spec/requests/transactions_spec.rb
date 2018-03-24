@@ -33,6 +33,11 @@ RSpec.describe "Transcation API", :type => :request do
         expect(response.status).to eq(200)
       end
 
+      it "responds with 404" do
+        get "/transactions/9999"
+        expect(response.status).to eq(404)
+      end
+
       it "responds with transaction data" do
         get "/transactions/#{my_transaction.id}"
         expect(response.body).to include(my_transaction.to_json)
