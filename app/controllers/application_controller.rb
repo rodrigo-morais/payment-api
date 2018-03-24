@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
 
   private
+
   def page
     @page ||= params[:page] || 1
   end
