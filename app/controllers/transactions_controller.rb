@@ -5,6 +5,13 @@ class TransactionsController < ApplicationController
     @transactions = Transaction.page(page).per(per_page)
 
     render json: @transactions, status: :ok
+
+    rescue Exception => e
+      render json: {
+        status: 500,
+        error: "Internal server error",
+        message: e.to_s
+      }, status: 500
   end
 
   def show
