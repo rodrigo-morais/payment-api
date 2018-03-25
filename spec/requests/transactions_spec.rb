@@ -98,7 +98,19 @@ RSpec.describe "Transcation API", :type => :request do
     let(:new_transaction) do
       {
         version: 0,
-        organisation_id: my_org.id
+        organisation_id: my_org.id,
+        amount: rand(10000),
+        currency: "USD",
+        beneficiary_name: "name",
+        beneficiary_account_number: rand(200),
+        beneficiary_account_number_code: rand(200),
+        beneficiary_bank_id: rand(200),
+        beneficiary_bank_id_code: rand(200),
+        debtor_name: "name",
+        debtor_account_number: rand(200),
+        debtor_account_number_code: rand(200),
+        debtor_bank_id: rand(200),
+        debtor_bank_id_code: rand(200)
       }
     end
     let(:wrong_transaction) do

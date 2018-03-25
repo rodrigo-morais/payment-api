@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323151531) do
+ActiveRecord::Schema.define(version: 20180325152851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,19 @@ ActiveRecord::Schema.define(version: 20180323151531) do
     t.uuid "organisation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", default: "CREATED"
+    t.float "amount"
+    t.string "currency"
+    t.string "beneficiary_name"
+    t.string "beneficiary_account_number"
+    t.string "beneficiary_account_number_code"
+    t.string "beneficiary_bank_id"
+    t.string "beneficiary_bank_id_code"
+    t.string "debtor_name"
+    t.string "debtor_account_number"
+    t.string "debtor_account_number_code"
+    t.string "debtor_bank_id"
+    t.string "debtor_bank_id_code"
   end
 
 end

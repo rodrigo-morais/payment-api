@@ -78,7 +78,19 @@ class TransactionsController < ApplicationController
   def transaction_params
     params.permit(
       :version,
-      :organisation_id
+      :organisation_id,
+      :amount,
+      :currency,
+      :beneficiary_name,
+      :beneficiary_account_number,
+      :beneficiary_account_number_code,
+      :beneficiary_bank_id,
+      :beneficiary_bank_id_code,
+      :debtor_name,
+      :debtor_account_number,
+      :debtor_account_number_code,
+      :debtor_bank_id,
+      :debtor_bank_id_code
     )
   end
 end
