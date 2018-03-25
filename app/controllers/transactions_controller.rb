@@ -1,4 +1,5 @@
 class TransactionsController < ApplicationController
+  before_action :authenticate_token
   after_action -> { set_pagination_headers :transactions }, only: [:index]
 
   def index
@@ -30,5 +31,17 @@ class TransactionsController < ApplicationController
         error: :not_found,
         message: e.to_s
       }, status: :not_found
+  end
+
+  private
+
+  def authenticate_token
+    if request.headers["Authorization"] != "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlLW1haWwiOiJtb3JhaXMucm1AZ21haWwuY29tIiwibmFtZSI6IlJvZHJpZ28gTW9yYWlzIiwidXVpZCI6MTIzM30.tib1NtKu0wUE1N9ISBDmfh-DOdSDD33yXq_E3XLEZWg"
+      render json: {
+        status: 401,
+        error: :unauthorized,
+        message: "Unathorized",
+      }, status: :unauthorized
+    end
   end
 end
