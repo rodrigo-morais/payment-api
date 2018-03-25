@@ -11,6 +11,13 @@ class TransactionSerializer < ActiveModel::Serializer
         host: 'localhost',
         port: '3000',
         id: object.id
+      ),
+      delete: url_for(
+        controller: 'transactions',
+        action: 'destroy',
+        host: 'localhost',
+        port: '3000',
+        id: object.id
       )
     }
   end
