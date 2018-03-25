@@ -33,6 +33,21 @@ class TransactionsController < ApplicationController
       }, status: :not_found
   end
 
+  def create
+    transaction = Transaction.new(transaction_params)
+
+    transaction.save!
+
+    render json: transaction, status: :created
+
+    rescue Exception => e
+      render json: {
+        status: 400,
+        error: :bad_request,
+        message: e.to_s
+      }, status: :bad_request
+  end
+
   private
 
   def authenticate_token
@@ -43,5 +58,12 @@ class TransactionsController < ApplicationController
         message: "Unathorized",
       }, status: :unauthorized
     end
+  end
+
+  def transaction_params
+    params.permit(
+      :version,
+      :organisation_id
+    )
   end
 end

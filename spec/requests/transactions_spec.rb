@@ -14,6 +14,10 @@ RSpec.describe "Transcation API", :type => :request do
     get path, headers: headers
   end
 
+  def post_auth(path, params)
+    post "/transactions", params: params, headers: headers
+  end
+
   context "with transaction" do
     let!(:my_transaction) { create :transaction }
     let(:transaction_json) do
@@ -82,6 +86,38 @@ RSpec.describe "Transcation API", :type => :request do
         get_auth("/transactions")
         expect(response.headers['LINK']).to be_nil
       end
+    end
+  end
+
+  context "create transaction" do
+    let!(:my_org) { create :organisation }
+    let(:new_transaction) do
+      {
+        version: 0,
+        organisation_id: my_org.id
+      }
+    end
+    let(:wrong_transaction) do
+      {
+        version: 0,
+        organisation_id: "wrong"
+      }
+    end
+
+    it "returns 201 for a valid transaction" do
+      post_auth("/transactions", new_transaction)
+      expect(response.status).to eq(201)
+    end
+
+    it "returns the new transaction" do
+      post_auth("/transactions", new_transaction)
+      transaction = TransactionSerializer.new(Transaction.last)
+      expect(response.body).to include(transaction.to_json)
+    end
+
+    it "returns 400 for an invalid transaction" do
+      post_auth("/transactions", wrong_transaction)
+      expect(response.status).to eq(400)
     end
   end
 end
