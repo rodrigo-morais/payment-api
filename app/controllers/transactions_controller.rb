@@ -48,6 +48,21 @@ class TransactionsController < ApplicationController
       }, status: :bad_request
   end
 
+  def destroy
+    @transaction = Transaction.find(params[:id])
+
+    @transaction.update_attributes(status: "CANCELED")
+
+    render status: :ok
+
+    rescue ActiveRecord::RecordNotFound => e
+      render json: {
+        status: 404,
+        error: :not_found,
+        message: e.to_s
+      }, status: :not_found
+  end
+
   private
 
   def authenticate_token

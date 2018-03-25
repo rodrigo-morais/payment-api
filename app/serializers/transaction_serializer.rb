@@ -1,7 +1,7 @@
 class TransactionSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :version, :organisation_id, :created_at, :updated_at, :links
+  attributes :id, :version, :organisation_id, :created_at, :updated_at, :status, :links
 
   def links
     {

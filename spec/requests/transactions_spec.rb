@@ -18,6 +18,10 @@ RSpec.describe "Transcation API", :type => :request do
     post "/transactions", params: params, headers: headers
   end
 
+  def cancel_auth(path)
+    delete path, headers: headers
+  end
+
   context "with transaction" do
     let!(:my_transaction) { create :transaction }
     let(:transaction_json) do
@@ -118,6 +122,28 @@ RSpec.describe "Transcation API", :type => :request do
     it "returns 400 for an invalid transaction" do
       post_auth("/transactions", wrong_transaction)
       expect(response.status).to eq(400)
+    end
+  end
+
+  context "cancel transaction" do
+    let!(:my_transaction) { create :transaction }
+
+    it "responds with 200" do
+      cancel_auth("/transactions/#{my_transaction.id}")
+      expect(response.status).to eq(200)
+    end
+
+    it "changes transaction status to CANCELED" do
+      expect {
+        cancel_auth("/transactions/#{my_transaction.id}")
+      }.to change {
+        my_transaction.reload.status
+      }.from("CREATED").to("CANCELED")
+    end
+
+    it "responds with 400 if transaction does not exist" do
+      cancel_auth("/transactions/9999")
+      expect(response.status).to eq(404)
     end
   end
 end
