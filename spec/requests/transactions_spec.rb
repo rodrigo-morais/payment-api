@@ -57,7 +57,7 @@ RSpec.describe "Transcation API", :type => :request do
 
       it "responds with transaction data" do
         get "/transactions"
-        expect(JSON.parse(response.body)["transactions"]).to be_empty
+        expect(JSON.parse(response.body)["data"]).to be_empty
       end
 
       it "responds with x-total-count in headers" do

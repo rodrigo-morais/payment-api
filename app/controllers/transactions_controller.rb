@@ -4,7 +4,12 @@ class TransactionsController < ApplicationController
   def index
     @transactions = Transaction.page(page).per(per_page)
 
-    render json: @transactions, meta: pagination_meta(@transactions), adapter: :json, status: :ok
+    render json: @transactions,
+                 root: "data",
+                 meta: pagination_meta(@transactions),
+                 meta_key: "links",
+                 adapter: :json,
+                 status: :ok
 
     rescue Exception => e
       render json: {

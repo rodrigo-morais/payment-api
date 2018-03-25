@@ -11,14 +11,43 @@ class ApplicationController < ActionController::API
   end
 
   def pagination_meta(object)
-    {}.tap do |hash|
-      hash[:first] = page_url(1) if !object.first_page? && object.total_count > 0
-      hash[:current] = page_url(page) if object.total_count > 0
-      hash[:next] = page_url(object.next_page) if object.next_page
-      hash[:prev] = page_url(object.prev_page) if object.prev_page
-      hash[:last] = page_url(object.total_pages) if !object.last_page? && object.total_count > 0
+    links = []
+
+    links << {}.tap do |hash|
+      hash[:href] = page_url(1)
+      hash[:rel] = "first"
+      hash[:type] = "GET"
+    end if !object.first_page? && object.total_count > 0
+
+    links << {}.tap do |hash|
+      hash[:href] = page_url(page)
+      hash[:rel] = "current"
+      hash[:type] = "GET"
+    end if object.total_count > 0
+
+    links << {}.tap do |hash|
+      hash[:href] = page_url(object.next_page)
+      hash[:rel] = "next"
+      hash[:type] = "GET"
+    end if object.next_page
+
+    links << {}.tap do |hash|
+      hash[:href] = page_url(object.prev_page)
+      hash[:rel] = "prev"
+      hash[:type] = "GET"
+    end if object.prev_page
+
+    links << {}.tap do |hash|
+      hash[:href] = page_url(object.total_pages)
+      hash[:rel] = "last"
+      hash[:type] = "GET"
+    end if !object.last_page? && object.total_count > 0
+
+    links << {}.tap do |hash|
       hash[:total_count] = object.total_count
     end
+
+    links
   end
 
   def set_pagination_headers(v_name)
