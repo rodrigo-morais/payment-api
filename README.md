@@ -28,14 +28,14 @@ $ docker-compose run --rm payment rspec
 
 ## Endpoints
 
-The API uses a token to authorize the request. For this example is necessary adds to request HEADERS:
+The API uses a token to authorize the request. For this example it is necessary to add to the request HEADERS:
 
 ```
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlLW1haWwiOiJtb3JhaXMucm1AZ21haWwuY29tIiwibmFtZSI6IlJvZHJpZ28gTW9yYWlzIiwidXVpZCI6MTIzM30.tib1NtKu0wUE1N9ISBDmfh-DOdSDD33yXq_E3XLEZWg
 ```
 
-As an example this token is validated inside of the API and use always the same token for all calls.
-In a real situation an API for authentication should crete and provide the token for the client. And another API or third party service validate that using JWT.
+As an example this token is validated by the API internally and the same token is used for all calls.
+In a real situation an API for authentication should crete and provide the token for the client. An additional API or third party service validates that using JWT.
 
 ### GET all transactions
 
@@ -45,14 +45,14 @@ Get all transactions using pagination.
 http://localhost:3000/transactions
 ```
 
-Is possible add page number and number of results per page as query string:
+It is possible to add page number and number of results per page as a query string:
 ```
 ?page=2&per_page=10
 ```
 
 ### GET transaction
 
-Get transaction with correspondent ID. If ID does not exist returns 404..
+Get a transaction with a corresponding ID. If ID does not exist returns 404.
 
 ```
 http://localhost:3000/transactions/:id
@@ -86,7 +86,7 @@ body: {
 
 ### DELETE transaction
 
-Update the transaction status with correspondent ID from `CREATED` to `CANCELED`. If ID does not exist returns 404..
+Updates the transaction status with the corresponding ID from `CREATED` to `CANCELED`. If ID does not exist returns 404.
 
 ```
 http://localhost:3000/transactions/:id
